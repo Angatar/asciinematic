@@ -1,12 +1,15 @@
-FROM php:8-apache-buster
+FROM php:8-fpm-alpine3.14
 LABEL org.opencontainers.image.authors="d3fk"
 ENV PAGE_TITLE=ASCIINEMA
-RUN apt-get update && apt-get install -y figlet \
-    # Clean the packages and install script in /var/cache/apt/archives/
-    && apt-get clean \
-    # Remove the package lists (created by apt-get update)
-    && rm -rf /var/lib/apt/lists/*
+
+RUN apk add --no-cache figlet \
+    && mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+# For a more efficient php we could have used opcache and JIT 
+# ... we are saving space and complexity for this simple training
+#&& docker-php-ext-configure opcache --enable-opcache \
+#&& docker-php-ext-install opcache \ 
 
 COPY ./app/ /var/www/html/
+VOLUME /var/www/html
 WORKDIR /var/www/html/
 
