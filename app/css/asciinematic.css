@@ -1,0 +1,480 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+*:before, *:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background: radial-gradient(#2b2b70, #000);
+  overflow-x: hidden;
+  overflow-y: visible;
+  color: goldenrod;
+  font-family: "Open Sans";
+  font-size: 18px;
+}
+
+h1 {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.box {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border: 2px solid #b78846;
+  width: 90ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.box:before, .box:after {
+  content: "•";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  color: #b78846;
+  border: 2px solid #b78846;
+  line-height: 12px;
+  top: 5px;
+  text-align: center;
+}
+
+.box:before {
+  left: 5px;
+}
+
+.box:after {
+  right: 5px;
+}
+
+.box .box-inner {
+  position: relative;
+  border: 2px solid #b78846;
+  padding: 40px;
+  min-width: 88ch;
+}
+
+.box .box-inner:before, .box .box-inner:after {
+  content: "•";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  color: #b78846;
+  border: 2px solid #b78846;
+  line-height: 12px;
+  bottom: -2px;
+  text-align: center;
+}
+
+.box .box-inner:before {
+  left: -2px;
+}
+
+.box .box-inner:after {
+  right: -2px;
+}
+
+#ascii-frame {
+  width: 77ch;
+  height: 18em;
+  padding: 50px;
+  background-color: black;
+  color: white;
+  white-space: pre;
+  font-family: \"Lucida Console\", Courier, monospace;
+}
+
+
+div[class*=control] {
+  height: 33.33%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div[class*=control] .hidden {
+  display: none;
+}
+
+
+.btn {
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+  width: 250px;
+  cursor: pointer;
+}
+
+
+.btn-stop {
+  color: #FFF;
+  transition: all 0.5s;
+  position: relative;
+}
+
+.btn-stop span {
+  z-index: 2;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-stop::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-stop::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-stop:hover::before {
+  transform: rotate(-45deg);
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.btn-stop:hover::after {
+  transform: rotate(45deg);
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.btn-focus {
+  color: #FFF;
+  transition: all 0.5s;
+  position: relative;
+}
+
+.btn-focus::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.btn-focus:hover::before {
+  opacity: 0;
+  transform: scale(0.5, 0.5);
+}
+
+.btn-focus::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transform: scale(1.2, 1.2);
+}
+
+.btn-focus:hover::after {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+
+
+.btn-sound {
+  color: #fff;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.btn-sound span {
+  transition: all 0.3s;
+}
+
+.btn-sound::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+  transform: scale(0.1, 1);
+}
+
+.btn-sound:hover span {
+  letter-spacing: 2px;
+}
+
+.btn-sound:hover::before {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+
+.btn-sound::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-sound:hover::after {
+  opacity: 0;
+
+  transform: scale(0.1, 1);
+}
+
+
+@keyframes move-background {
+  from {
+    -webkit-transform: translate3d(0px, 0px, 0px);
+  }
+
+  to {
+    -webkit-transform: translate3d(1000px, 0px, 0px);
+  }
+}
+
+@-webkit-keyframes move-background {
+  from {
+    -webkit-transform: translate3d(0px, 0px, 0px);
+  }
+
+  to {
+    -webkit-transform: translate3d(1000px, 0px, 0px);
+  }
+}
+
+@-moz-keyframes move-background {
+  from {
+    -webkit-transform: translate3d(0px, 0px, 0px);
+  }
+
+  to {
+    -webkit-transform: translate3d(1000px, 0px, 0px);
+  }
+}
+
+@-webkit-keyframes move-background {
+  from {
+    -webkit-transform: translate3d(0px, 0px, 0px);
+  }
+
+  to {
+    -webkit-transform: translate3d(1000px, 0px, 0px);
+  }
+}
+
+.star {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+}
+
+
+.stars {
+  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+  -webkit-transition: background-color 20s linear;
+  -moz-transition: background-color 20s linear;
+  -o-transition: background-color 20s linear;
+  -ms-transition: background-color 20s linear;
+  transition: background-color 20s linear;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+}
+
+.twinkling {
+  width: 10000px;
+  height: 100%;
+  background: transparent url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/twinkling.png") repeat;
+  transition: all 60s ease;
+  background-size: 1000px 1000px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -moz-animation: move-background 70s linear infinite;
+  -ms-animation: move-background 70s linear infinite;
+  -o-animation: move-background 70s linear infinite;
+  -webkit-animation: move-background 70s linear infinite;
+  animation: move-background 70s linear infinite;
+}
+
+canvas {
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  padding: 40px;
+  white-space: pre;
+  font-family: \"Lucida Console\", Courier, monospace;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  min-width: 90ch;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: inherit;
+}
+
+.btn span big {
+  font-family: -webkit-pictograph;
+}
+
+.no-star {
+  opacity: 0;
+  color: #000;
+  font-size: 4px;
+}
+
+.black-star {
+  color: #000;
+  font-size: 4px;
+}
+
+.death-star {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 90ch 1fr;
+    grid-template-rows: auto 1fr auto;
+
+  }
+
+  .death-star {
+    display: table-caption;
+    color: #898989;
+    opacity: 1;
+    font-size: 4px;
+    transition: all 40s ease;
+  }
+}
+
+header {
+  grid-column: span 3;
+  text-align: center;
+  z-index: 1;
+}
+
+main {
+  flex: 1;
+  z-index: 1;
+}
+
+nav {
+  padding: 20px;
+  z-index: 1;
+}
+
+aside {
+  padding: 20px;
+  z-index: 1;
+}
+
+footer {
+  grid-column: span 3;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  z-index: 1;
+}
+
+h1 {
+  margin-bottom: 1em;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#ship1, #ship2 {
+  text-align: center;
+}
+
+.ship1 {
+  float: left;
+}
+
+.ship2 {
+  float: right;
+}
+
+#ship2 {
+  opacity: 0.4;
+}
+
+#credits {
+  display: flow-root;
+}
+
+.ship1, .ship2, #credits {
+  white-space: pre;
+  font-family: "\"Lucida Console\"", Courier, monospace;
+  transition: all 3s;
+}

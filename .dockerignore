@@ -1,0 +1,7 @@
+# ignore .git Dockerfile tmp .dockerignore and a few others just in case
+.git
+.gitignore
+.dockerignore
+tmp
+*.md
+Dockerfile
