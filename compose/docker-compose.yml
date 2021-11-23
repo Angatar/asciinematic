@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  fpm-app:
+    image: d3fk/asciinematic:fpm
+    volumes:
+      - web_data:/var/www/html
+    restart: always
+    networks:
+      - app1
+
+  nginx-fpm:
+    depends_on:
+      - fpm-app
+    image: d3fk/nginx-fpm:sse
+    volumes:
+      - web_data:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - app1
+    restart: always
+    environment:
+      NGINX_HOST: localhost
+      NGINX_UPSTREAM_NAME: fpm-app
+
+volumes:
+  web_data: {}
+networks:
+    app1:
