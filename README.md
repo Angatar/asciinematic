@@ -6,14 +6,14 @@ NB: if you are looking for the first part of this training material, see d3fk/wh
 
 It contains a small website that displays animated ascii content using the SSE (Server-Sent Events) technology with PHP.
 
-Through the use of this container in its 2 versions (cf available tags) the user/student is invited to understand:
+Through the use of this container in its 2 versions (see available tags) the user/student is invited to understand:
 - How to map the container ports to the host's ports
-- The non persistance of the container content
+- The non persistence of the container content
 - The use of volumes and bind mounts to make any content to persist
 - The use of docker sub-networks
 - The use of docker network to create communication between containers
 - The use of bind mounts and volumes to share content between containers
-- The docker-compose basic commnands on CLI
+- The docker-compose basic commands on CLI
 - How to create his own docker-compose.yml for
 
 
@@ -125,7 +125,7 @@ docker ps
 You should observe that your container disapeared but it was automatically restarted(same container ID but STATUS Up X seconds) by Docker to replace the one with the process killed (since we've asked Docker to always restart this container unless we stop it)
 
 The website still have the change you made.
-But if instead we remove the container and run d3fk/asciinematic again, a new container will be created and the change will disapear... it is due to the immutability of the image of the container
+But if instead we remove the container and run d3fk/asciinematic again, a new container will be created and the change will disappear... it is due to the immutability of the image of the container
 ```sh
 docker rm -f asciinematic
 ```
@@ -134,7 +134,7 @@ docker run -p 80:80 -d --name asciinematic --restart always d3fk/asciinematic
 ```
 Visit the website and observe that the change you made earlier has disapeared... the vim package is even no more present in the container.
 
-4. **Use a bind mount to make a change more persistent e.g: including new containers if they use the same bind mount **
+4. **Use a bind mount to make a change more persistent e.g: including new containers if they use the same bind mount**
 As asked by the stickman, we need to create a bind mount but we don't have the sources of the container, we only know it is in /var/www/html
   - We first need to get the index.php file ... from our running container for example
   ```sh
@@ -168,15 +168,117 @@ As asked by the stickman, we need to create a bind mount but we don't have the s
   ```
 
 5. **Running a multi-containerized application with Docker cli**
-The d3fk/asciinematic was a good example of a simple web container but it is Debian based, so a bit heavy, containning more than required ... lets try a lighter version d3fk/asciinematic:fpm
+The d3fk/asciinematic was a good example of a simple web container but it is Debian based, so a bit heavy, containing more than required ... lets try a lighter version based on Alpine Linux d3fk/asciinematic:fpm
 
+fpm stands for Fast CGI Process Manager ... known to be more robust in terms of load than the standard PHP version.
+It basically serves php processed script to the port 9000 by default and only php files ... moreover it is very confident, and can't be safely exposed to the world so we need to proxy it
+The solution will be to use another container that will be used as proxy  of the fpm application and serve static files in complement to the php-fpm
+
+on the docker default network we can use the --link option of the docker run command to connect 2 containers on the network (/etc/hosts is maintained up to date by docker engine on the linked containers)
+```sh
+docker run --link option
+ ```
+ We could also makes use of the docker DNS capabilities available on custom networks
+ - Starting by creating a new network
+  ```sh
+  docker network create app1
+  ```
+  - Then running our fpm application in this custom network
+  ```sh
+  docker run --network app1 --name fpm-app -d d3fk/asciinematic:fpm
+  ```
+  Note: we don't need to open any port here our container expose port 9000 on the local network as defined in its base image
+   - Then running our nginx server also in this custom network
+  ```sh
+  docker run -p 8080:80 -d --name nginx --network app1 d3fk/nginx-fpm:sse
+  ```
+  Note: d3fk/nginx-fpm is configured to serve by default any fpm app named fpm-app on the same network on port 9000 the name of the served app can be change by using ENV.
+  The :sse tag is a version of nginx-fpm dedicated to sse that require nginx to not use cache and not create bunches of packets.
+  Visit  [your localhost on port 8080](http://localhost:8080)
+  What happened?
+  Answer: Your proxy can serve the fpm-app but not the static files ... we need to mount the static files to nginx so that it can serve them
+  ... lets use a volume for that purpose ...
+  - Violently remove all containers:
+  ```sh
+  docker rm -f $(docker ps -aq)
+  ```
+  - Recreate our fpm with a volume, let simply name it "data" (observe volume propagation property)
+  ```sh
+  docker run --network app1 --name fpm-app -d -v data:/var/www/html/ d3fk/asciinematic:fpm
+  ```
+  Note: a new volume is created (data) as it was empty it now contains the content of "/var/www/html/", if it had content it would have replaced "/var/www/html/"... it is the property of data propagation of the docker volumes
+  The volume can be seen from
+  ```sh
+  docker volume ls
+  ```
+  - Recreate our nginx container using the data volume mounted on the same path
+  ```sh
+  docker run -p 8080:80 -d --name nginx --network app1 -v data:/var/www/html/ d3fk/nginx-fpm:sse
+  ```
+  Does it works now? ;)
+  - **Wait a minute! we forgot to inspect our images, it seems a volume was automatically created by the fpm-app**
+  ```sh
+  docker inspect d3fk/asciinematic:fpm
+  ```
+  So lets clean all again and retry with the volume that exists:
+  ```sh
+  docker rm -f $(docker ps -aq)
+  docker volume prune -f
+  ```
+  Recreate our fpm as initially
+  ```sh
+  docker run --network app1 --name fpm-app -d d3fk/asciinematic:fpm
+  ```
+  Then recreate nginx-fpm:sse using the unnamed volume automatically generated by our fpm-app
+  ```sh
+  docker run -p 8181:80 --network app1 -d --volumes-from fpm-app d3fk/nginx-fpm:sse
+  ```
+  Note: the port was changed jsut to see if you are paying attention
+  Note2: the --volumes-from option allows to mount all volumes of another container on the same paths
+
+  Visit  [your localhost on port 8181](http://localhost:8181)
+
+  Great! you made it works again ... but, let say it, it is quite annoying to type all these commands at every run, isn't it?
+
+6. **Running a multi-containerized application with docker-compose**
+- Lets clean a new time
+  ```sh
+  docker rm -f $(docker ps -aq)
+  docker volume prune -f
+  ```
+- An existing docker-compose.yaml is available on the fpm branch of the d3fk/asciinematic repo
+  We are going to download/copy it (use your favourite way, including alpine/git container)
+  Then simply start the file with
+  ```sh
+  docker-compose up -d
+  ```
+  visit your localhost at port 80 ... does it works?
+  More easy to deploy, isn’t it?
+  We can still access each container by using standard docker commands but there are also some docker-compose commands e.g:
+  ```sh
+  docker-compose logs -f
+  ```
+  To shut down the composed application, simply use
+  ```sh
+  docker-compose down
+  ```
+  To remove stopped containers
+  ```sh
+  docker-compose rm
+  ```
+  In case you need anonymous volume are recreated on run (e.g: to avoid persistence) you can make use of the -V option
+  ```sh
+  docker-compose up -d -V
+  ```
 
 ... to be continued
+
+  docker-compose can be used to deploy on Swarm ;)
 ----
 ## CONGRATULATION!
 You are ready for the next level :)
 
-Docker Swarm ?
+= Orchestration ... maybe with Docker Swarm in a first time?
 
 
 
