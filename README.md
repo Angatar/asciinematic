@@ -144,7 +144,7 @@ As asked by the stickman, we need to create a bind mount but we don't have the s
 
   - Lets now create a new container with the bind mount ... docker do not accept 2 containers with the same name nor 2 containers trying to allocate the same port on the host
   ```sh
-  docker run -p 90:80 -d --name asciinematic2 -v $(pwd)/index.php:/var/www/index.php --restart always d3fk/asciinematic
+  docker run -p 90:80 -d --name asciinematic2 -v $(pwd)/index.php:/var/www/html/index.php --restart always d3fk/asciinematic
   ```
   Note: in PowerShell replace $(pwd)/ by ${pwd}\
 
@@ -283,4 +283,15 @@ You are ready for the next level :)
 
 
 [![GitHub license](https://img.shields.io/github/license/Angatar/asciinematic)](https://github.com/Angatar/asciinematic/blob/master/LICENSE)
+
+----
+----
+## HIDDEN MEDIA CREDITS (not part of the MIT):
+*Many thanks to the artists who accepted to let me embed their piece of art into this container, they made this docker training lesson much more entertaining for the students, they will for sure remind more of it:*
+
+- **STARWARS ASCIIMATION:** by Simon Jansen ([official website https://www.asciimation.co.nz/](https://www.asciimation.co.nz/))
+
+- **Music credit:** Star Wars theme by Mos Eisley Kazoo Orchestra (music by John Williams, executive producers Roberto Ferreri & Giuseppe D'Agostino ... )
+
+***Any reuse of these art materials outside of one the d3fk/asciinematic container image has to be granted by the artists first!***
 
