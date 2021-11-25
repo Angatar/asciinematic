@@ -286,12 +286,12 @@ You are ready for the next level :)
 
 ----
 ----
-## HIDDEN MEDIA CREDITS (not part of the MIT):
+## HIDDEN MEDIA CREDITS:
 *Many thanks to the artists who accepted to let me embed their piece of art into this container, they made this docker training lesson much more entertaining for the students, they will for sure remind more of it:*
 
 - **STARWARS ASCIIMATION:** by Simon Jansen ([official website https://www.asciimation.co.nz/](https://www.asciimation.co.nz/))
 
-- **Music credit:** Star Wars theme by Mos Eisley Kazoo Orchestra (music by John Williams, executive producers Roberto Ferreri & Giuseppe D'Agostino ... )
+- **Music credit:** Star Wars theme by Mos Eisley Kazoo Orchestra (music by John Williams, executive producers Roberto Ferreri & Giuseppe D'Agostino)
 
 ***Any reuse of these art materials outside of one the d3fk/asciinematic container image has to be granted by the artists first!***
 
