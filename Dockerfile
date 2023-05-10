@@ -1,4 +1,4 @@
-FROM php:8-apache-buster
+FROM php:8-apache-bullseye
 LABEL org.opencontainers.image.authors="d3fk"
 ENV PAGE_TITLE=ASCIINEMA
 RUN apt-get update && apt-get install -y figlet \
