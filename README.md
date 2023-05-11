@@ -13,7 +13,7 @@ Through the use of this container in its 2 versions (see available tags) the use
 - The use of docker sub-networks
 - The use of docker network to create communication between containers
 - The use of bind mounts and volumes to share content between containers
-- The docker-compose basic commands on CLI
+- The docker compose basic commands on CLI
 - How to create his own docker-compose.yml for
 
 
@@ -240,7 +240,7 @@ docker run --link option
 
   Great! you made it works again ... but, let say it, it is quite annoying to type all these commands at every run, isn't it?
 
-6. **Running a multi-containerized application with docker-compose**
+6. **Running a multi-containerized application with docker compose**
 - Lets clean a new time
   ```sh
   docker rm -f $(docker ps -aq)
@@ -250,30 +250,30 @@ docker run --link option
   We are going to download/copy it (use your favourite way, including alpine/git container)
   Then simply start the file with
   ```sh
-  docker-compose up -d
+  docker compose up -d
   ```
   visit your localhost at port 80 ... does it works?
   More easy to deploy, isn’t it?
-  We can still access each container by using standard docker commands but there are also some docker-compose commands e.g:
+  We can still access each container by using standard docker commands but there are also some docker compose commands e.g:
   ```sh
-  docker-compose logs -f
+  docker compose logs -f
   ```
   To shut down the composed application, simply use
   ```sh
-  docker-compose down
+  docker compose down
   ```
   To remove stopped containers
   ```sh
-  docker-compose rm
+  docker compose rm
   ```
   In case you need anonymous volume are recreated on run (e.g: to avoid persistence) you can make use of the -V option
   ```sh
-  docker-compose up -d -V
+  docker compose up -d -V
   ```
 
 ... to be continued
 
-  docker-compose can be used to deploy on Swarm ;)
+  docker compose can be used to deploy on Swarm ;)
 ----
 ## CONGRATULATION!
 You are ready for the next level :)
