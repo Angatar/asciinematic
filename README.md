@@ -94,7 +94,7 @@ $ apt-get install -y vim
 $ vi index.php
 ```
 
-Change the DEFAULT_STREAM value from "asciistream" to "ProDev" (:wq to save and quit)
+Change the DEFAULT_STREAM value from "asciistream" to "DR12" (:wq to save and quit)
 
 type ```exit``` to leave the container
 
