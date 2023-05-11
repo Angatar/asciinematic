@@ -31,7 +31,7 @@ function play(pointer) {
     audiosource != "https://assets.mixkit.co/sfx/preview/mixkit-small-waves-harbor-rocks-1208.mp3"
   ) {
     document.getElementById('soundtrack').setAttribute('src', 'https://assets.mixkit.co/sfx/preview/mixkit-small-waves-harbor-rocks-1208.mp3');
-  } else if (streamtype == 'ProDev' &&
+  } else if (streamtype == 'DR12' &&
     audiosource != "https://assets.mixkit.co/sfx/preview/mixkit-keyboard-typing-1386.mp3"
   ) {
     document.getElementById('soundtrack').setAttribute('src', 'https://assets.mixkit.co/sfx/preview/mixkit-keyboard-typing-1386.mp3');

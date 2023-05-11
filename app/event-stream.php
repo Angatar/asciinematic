@@ -22,7 +22,7 @@ function init(&$asciifile, &$frame_id)
       case strval($_GET['src']) == 'jedi':
         $asciifile = './ascii/jedi.ascii';
         break;
-      case strval($_GET['src']) == 'ProDev':
+      case strval($_GET['src']) == 'DR12':
         $asciifile = './ascii/prodev.ascii';
         break;
       default:
