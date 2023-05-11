@@ -1,7 +1,7 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/d3fk/asciinematic) ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/d3fk/asciinematic) ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/d3fk/asciinematic) ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/d3fk/asciinematic) ![Docker Stars](https://img.shields.io/docker/stars/d3fk/asciinematic) [![GitHub license](https://img.shields.io/github/license/Angatar/asciinematic)](https://github.com/Angatar/asciinematic/blob/master/LICENSE)
 # asciinematic (Angatar> d3fk/asciinematic)
 
-This is the second container made to serve as training material for a "ProDev" training class on Docker with almost no code (text/ascii files are mainly manipulated).
+This is the second container made to serve as training material for training classes on Docker (ProDev, CESAR, CNRS DR12) with almost no code (text/ascii files are mainly manipulated).
 NB: if you are looking for the first part of this training material, see d3fk/whalecome.
 
 It contains a small website that displays animated ascii content using the SSE (Server-Sent Events) technology with PHP.
@@ -94,7 +94,7 @@ $ apt-get install -y vim
 $ vi index.php
 ```
 
-Change the DEFAULT_STREAM value from "asciistream" to "ProDev" (:wq to save and quit)
+Change the DEFAULT_STREAM value from "asciistream" to "DR12" (:wq to save and quit)
 
 type ```exit``` to leave the container
 
@@ -146,7 +146,7 @@ As asked by the stickman, we need to create a bind mount but we don't have the s
   ```sh
   docker run -p 90:80 -d --name asciinematic2 -v $(pwd)/index.php:/var/www/html/index.php --restart always d3fk/asciinematic
   ```
-  Note: in PowerShell replace $(pwd)/ by ${pwd}\
+  Note: in PowerShell replace `$(pwd)/` by `${pwd}\`
 
   Visit [your localhost on port 80](http://localhost) and [your localhost on port 90](http://localhost:90) to observe they are identical
 
