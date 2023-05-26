@@ -223,7 +223,7 @@ docker run --link option
   So lets clean all again and retry with the volume that exists:
   ```sh
   docker rm -f $(docker ps -aq)
-  docker volume prune -f
+  docker volume prune -a
   ```
   Recreate our fpm as initially
   ```sh
@@ -244,7 +244,7 @@ docker run --link option
 - Lets clean a new time
   ```sh
   docker rm -f $(docker ps -aq)
-  docker volume prune -f
+  docker volume prune -a
   ```
 - An existing docker-compose.yaml is available on the fpm branch of the d3fk/asciinematic repo
   We are going to download/copy it (use your favourite way, including alpine/git container)
